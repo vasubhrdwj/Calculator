@@ -1,3 +1,7 @@
+let btn = document.querySelectorAll(".digit");
+let displayRes = document.querySelector(".display-result");
+let operator = document.querySelectorAll(".op");
+
 function Add(a, b) {
   return a + b;
 }
@@ -33,10 +37,20 @@ function operate(n1, n2, op) {
   }
 }
 
-console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
-oper = "-";
-console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
-oper = "*";
-console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
-oper = "/";
-console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
+let displayValue = "";
+
+btn.forEach((item) =>
+  item.addEventListener("click", () => {
+    displayValue += item.textContent;
+    console.log("button clicked");
+    displayRes.textContent = displayValue;
+  })
+);
+
+// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
+// oper = "-";
+// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
+// oper = "*";
+// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
+// oper = "/";
+// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);

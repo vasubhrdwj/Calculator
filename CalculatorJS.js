@@ -18,10 +18,25 @@ let num1 = 18;
 let num2 = 6;
 let oper = "+";
 
-console.log(`${num1} ${oper} ${num2} = ${Add(num1, num2)}`);
+function operate(n1, n2, op) {
+  if (op === "+") {
+    return Add(n1, n2);
+  }
+  if (op === "-") {
+    return Subtract(n1, n2);
+  }
+  if (op === "*") {
+    return Multiply(n1, n2);
+  }
+  if (op === "/") {
+    return Divide(n1, n2);
+  }
+}
+
+console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
 oper = "-";
-console.log(`${num1} ${oper} ${num2} = ${Subtract(num1, num2)}`);
+console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
 oper = "*";
-console.log(`${num1} ${oper} ${num2} = ${Multiply(num1, num2)}`);
+console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
 oper = "/";
-console.log(`${num1} ${oper} ${num2} = ${Divide(num1, num2)}`);
+console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);

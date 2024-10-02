@@ -1,89 +1,71 @@
-let digitBtn = document.querySelectorAll(".digit");
-let displayRes = document.querySelector(".display-result");
-let operator = document.querySelectorAll(".op");
+/*Getting Node elements from HTML */
+
+let display = document.querySelector(".display-result");
 let equals = document.querySelector(".btn-equal");
-let num1, num2;
-let oper;
-let res;
 
-function Add(a, b) {
-  return a + b;
-}
-
-function Subtract(a, b) {
-  return a - b;
-}
-
-function Multiply(a, b) {
-  return a * b;
-}
-
-function Divide(a, b) {
-  return a / b;
-}
+/* Calls operation to perform */
 
 function operate(n1, n2, op) {
+  n1 = parseInt(n1);
+  n2 = parseInt(n2);
   if (op === "+") {
-    return Add(n1, n2);
+    return n1 + n2;
   }
   if (op === "-") {
-    return Subtract(n1, n2);
+    return n1 - n2;
   }
   if (op === "*") {
-    return Multiply(n1, n2);
+    return n1 * n2;
   }
   if (op === "/") {
-    return Divide(n1, n2);
+    return n1 / n2;
   }
 }
 
-let displayValue = "";
-let number = "";
+/* Events Delegated  */
+let num1, num2, opr;
+let curr = "";
 
-digitBtn.forEach((item) =>
-  item.addEventListener("click", () => {
-    displayValue += item.textContent;
-    number += item.textContent;
-    displayRes.textContent = displayValue;
-  })
-);
+document.addEventListener("click", (event) => {
+  let item = event.target;
+  // If any number Clicked
+  if (item.classList.contains("digit")) {
+    curr += item.textContent;
+    display.textContent = curr;
+  }
 
-operator.forEach((optr) =>
-  optr.addEventListener("click", () => {
-    switch (optr.className) {
-      case "op btn-subtract":
-        oper = "-";
-        break;
-      case "op btn-add":
-        oper = "+";
-        break;
-      case "op btn-multiply":
-        oper = "*";
-        break;
-      case "op btn-divide":
-        oper = "/";
-        break;
-      default:
-        console.log("Nothing");
-        break;
+  // If operator clicked
+  if (event.target.classList.contains("op")) {
+    let opChosen = item.classList;
+
+    if (opChosen.contains("btn-add")) {
+      opr = "+";
+      curr += " + ";
+    } else if (opChosen.contains("btn-subtract")) {
+      opr = "-";
+      curr += " - ";
+    } else if (opChosen.contains("btn-divide")) {
+      opr = "/";
+      curr += " / ";
+    } else {
+      opr = "*";
+      curr += " * ";
     }
-    num1 = parseInt(number);
-    displayValue += optr.textContent;
-    displayRes.textContent = displayValue;
-    number = "";
-  })
-);
 
-equals.addEventListener("click", () => {
-  num2 = parseInt(number);
-  displayValue = "";
-  displayRes.textContent = operate(num1, num2, oper);
+    display.textContent = curr;
+  }
+
+  // Equals to Sign Clicked
+  if (event.target.className == "btn-equal") {
+    exp = curr.split(" ");
+    display.textContent = operate(exp[0], exp[2], exp[1]);
+    curr = "";
+  }
 });
 
-// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
-// oper = "-";
-// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
-// oper = "*";
-// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
-// oper = "/";
-// console.log(`${num1} ${oper} ${num2} = ${operate(num1, num2, oper)}`);
+// equals.addEventListener("click", () => {
+//   num2 = parseInt(number);
+//   number = "";
+//   currEval = "";
+//   displayRes.textContent = operate(num1, num2, oper);
+// });

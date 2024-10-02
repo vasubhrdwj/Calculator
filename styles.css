@@ -10,6 +10,7 @@ button {
   margin: 10px;
   background-color: #1b1a55;
   color: white;
+  font-size: 20px;
 }
 
 .CalculatorUI {
@@ -22,7 +23,7 @@ button {
   border: 5px solid #070f2b;
   border-radius: 20px;
   padding: 20px 30px 20px;
-  max-width: 30vw;
+  max-width: 28vw;
   gap: 10px;
   height: 90vh;
   margin-left: auto;
@@ -39,6 +40,9 @@ button {
   display: flex;
   align-items: end;
   flex-direction: column;
+  height: 150px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .display-upper {
@@ -50,33 +54,10 @@ button {
 
 /* Display UI End*/
 
-/* Row (Clear row) */
-
-.row-clear {
-  display: flex;
-  justify-content: baseline;
-}
-
-.btn-Reset {
-  flex: 1 1 60%;
-}
-
-.btn-del {
-  flex: 1 1 25%;
-}
-
-/* End Row (Clear row) */
-
-.row-1 {
-  display: flex;
-  /* justify-content: space-between; */
-}
-.row-2 {
-  display: flex;
-}
-.row-3 {
-  display: flex;
-}
+.row-clear,
+.row-1,
+.row-2,
+.row-3,
 .base-row {
   display: flex;
 }
@@ -87,3 +68,29 @@ button {
 .op {
   flex: 1 1 25%;
 }
+
+/* Row (Clear row) */
+.btn-Reset {
+  flex: 1 1 58%;
+}
+
+.btn-del {
+  flex: 1 1 25%;
+}
+
+/* End Row (Clear row) */
+
+/* Row (Base row) */
+.btn-0 {
+  flex: 1 1 58%;
+}
+
+.btn-decimal {
+  flex: 1 1 25%;
+}
+
+.btn-equal {
+  flex: 1 1 25%;
+}
+
+/* End Row (Base row) */

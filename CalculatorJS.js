@@ -60,6 +60,10 @@ document.addEventListener("click", (event) => {
   if (item.className == "btn-Reset") {
     resetAll();
   }
+
+  if (item.className == "btn-del") {
+    delLast(item);
+  }
 });
 
 /* Different Functions */
@@ -141,4 +145,16 @@ function resetAll() {
   hasDecimal = false;
   display.textContent = curr;
   displayRes.textContent = curr;
+}
+
+function delLast(item) {
+  let sub = 1;
+  if (!Number.isInteger(parseInt(curr[curr.length - 1]))) {
+    opr = null;
+    sub = 3;
+  }
+  curr = curr.substring(0, curr.length - sub);
+  let text = display.textContent;
+  text = text.substring(0, text.length - sub);
+  display.textContent = text;
 }

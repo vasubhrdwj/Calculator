@@ -1,10 +1,29 @@
 body {
-  background-color: aquamarine;
-  margin-left: 450px;
+  background-color: #9290c3;
+  /* margin-left: 450px; */
+  color: white;
+}
+
+.CalculatorUI {
+  display: flex;
+  background-color: #070f2b;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid 070f2b;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 30vw;
+  height: 80vh;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 button {
-  width: 40px;
-  height: 40px;
-  margin: 15px;
+  width: 60px;
+  height: 60px;
+  margin: 20px;
+  /* border-radius: 10px; */
+  border: 0px;
+  background-color: #1b1a55;
+  color: white;
 }

@@ -3,9 +3,13 @@
 let display = document.querySelector(".display-upper");
 let displayRes = document.querySelector(".display-lower");
 let equals = document.querySelector(".btn-equal");
+
+/* Variables */
+
+let curr = "";
 let justSolved = false;
 let opr;
-let curr = "";
+let hasDecimal = false;
 
 /* Calls operation to perform */
 
@@ -30,69 +34,35 @@ function operate(n1, n2, op) {
 }
 
 /* Events Delegated  */
+
 document.addEventListener("click", (event) => {
   let item = event.target;
-  // If any number Clicked
+
   if (item.classList.contains("digit")) {
-    // For calcs after equals to or after operations
-    if (justSolved) {
-      let lastElem = parseInt(curr[curr.length - 1]);
-      if (Number.isInteger(lastElem)) {
-        curr = "";
-        display.textContent = "";
-      }
-      justSolved = false;
-    }
-
-    curr += item.textContent;
-    display.textContent += item.textContent;
+    addDigits(item);
   }
 
-  // If operator clicked
   if (event.target.classList.contains("op")) {
-    let opChosen = item.classList;
-
-    let lastElem = parseInt(curr[curr.length - 1]);
-    if (!Number.isInteger(lastElem)) {
-      return;
-    }
-
-    if (opr) {
-      exp = curr.split(" ");
-      curr = operate(exp[0], exp[2], exp[1]);
-    }
-
-    if (opChosen.contains("btn-add")) {
-      opr = "+";
-      curr += " + ";
-    } else if (opChosen.contains("btn-subtract")) {
-      opr = "-";
-      curr += " - ";
-    } else if (opChosen.contains("btn-divide")) {
-      opr = "/";
-      curr += " / ";
-    } else {
-      opr = "*";
-      curr += " * ";
-    }
-
-    display.textContent += ` ${opr} `;
+    operatorFn(item);
   }
 
-  // Equals to Sign Clicked
-  if (event.target.className == "btn-equal") {
-    exp = curr.split(" ");
-    if (check(exp) == false) return;
-    if (exp[2] == 0) res = "lmao";
-    else res = operate(exp[0], exp[2], exp[1]);
+  if (item.className == "btn-equal") {
+    equalsFn();
+  }
 
-    curr = res.toString();
-    opr = null;
-    justSolved = true;
-    display.textContent = res;
-    displayRes.textContent = res;
+  if (item.className == "btn-decimal") {
+    if (hasDecimal) return;
+    curr += ".";
+    display.textContent += ".";
+    hasDecimal = true;
+  }
+
+  if (item.className == "btn-Reset") {
+    resetAll();
   }
 });
+
+/* Different Functions */
 
 function check(exp) {
   if (!Number.isInteger(parseInt(exp[0]))) return false;
@@ -101,15 +71,74 @@ function check(exp) {
   return true;
 }
 
-// function lastIndex(s) {
-//   if (!opr) return 0;
-//   if (opr == "+") {
-//     return s.lastIndexOf("+") + 2;
-//   } else if (opr == "-") {
-//     return s.lastIndexOf("-") + 2;
-//   } else if (opr == "*") {
-//     return s.lastIndexOf("*") + 2;
-//   } else if (opr == "/") {
-//     return s.lastIndexOf("/") + 2;
-//   }
-// }
+function addDigits(item) {
+  // For calcs after equals to or after operations
+  if (justSolved) {
+    let lastElem = parseInt(curr[curr.length - 1]);
+    if (Number.isInteger(lastElem)) {
+      curr = "";
+      display.textContent = "";
+    }
+    justSolved = false;
+  }
+
+  curr += item.textContent;
+  display.textContent += item.textContent;
+}
+
+function operatorFn(item) {
+  let opChosen = item.classList;
+
+  let lastElem = parseInt(curr[curr.length - 1]);
+  if (!Number.isInteger(lastElem)) {
+    return;
+  }
+
+  if (opr) {
+    exp = curr.split(" ");
+    curr = operate(exp[0], exp[2], exp[1]);
+  }
+
+  if (opChosen.contains("btn-add")) {
+    opr = "+";
+    curr += " + ";
+  } else if (opChosen.contains("btn-subtract")) {
+    opr = "-";
+    curr += " - ";
+  } else if (opChosen.contains("btn-divide")) {
+    opr = "/";
+    curr += " / ";
+  } else {
+    opr = "*";
+    curr += " * ";
+  }
+  hasDecimal = false;
+  display.textContent += ` ${opr} `;
+}
+
+function equalsFn(item) {
+  exp = curr.split(" ");
+  if (check(exp) == false) return;
+  if (exp[2] == 0) {
+    res = "LMAO";
+    curr = "";
+  } else {
+    res = operate(exp[0], exp[2], exp[1]);
+    curr = curr = res.toString();
+  }
+
+  opr = null;
+  justSolved = true;
+  hasDecimal = false;
+  display.textContent = res;
+  displayRes.textContent = res;
+}
+
+function resetAll() {
+  opr = null;
+  curr = "";
+  justSolved = false;
+  hasDecimal = false;
+  display.textContent = curr;
+  displayRes.textContent = curr;
+}

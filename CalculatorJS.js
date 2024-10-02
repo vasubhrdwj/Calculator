@@ -1,6 +1,7 @@
 /*Getting Node elements from HTML */
 
-let display = document.querySelector(".display-result");
+let display = document.querySelector(".display-upper");
+let displayRes = document.querySelector(".display-lower");
 let equals = document.querySelector(".btn-equal");
 let justSolved = false;
 let opr;
@@ -9,8 +10,8 @@ let curr = "";
 /* Calls operation to perform */
 
 function operate(n1, n2, op) {
-  n1 = parseInt(n1);
-  n2 = parseInt(n2);
+  n1 = parseFloat(n1);
+  n2 = parseFloat(n2);
   let res;
   if (op === "+") {
     res = n1 + n2;
@@ -29,28 +30,29 @@ function operate(n1, n2, op) {
 }
 
 /* Events Delegated  */
-
-
 document.addEventListener("click", (event) => {
   let item = event.target;
   // If any number Clicked
   if (item.classList.contains("digit")) {
+    // For calcs after equals to or after operations
     if (justSolved) {
       let lastElem = parseInt(curr[curr.length - 1]);
       if (Number.isInteger(lastElem)) {
         curr = "";
+        display.textContent = "";
       }
       justSolved = false;
     }
+
     curr += item.textContent;
-    display.textContent = curr;
+    display.textContent += item.textContent;
   }
 
   // If operator clicked
   if (event.target.classList.contains("op")) {
     let opChosen = item.classList;
-    let lastElem = parseInt(curr[curr.length - 1]);
 
+    let lastElem = parseInt(curr[curr.length - 1]);
     if (!Number.isInteger(lastElem)) {
       return;
     }
@@ -74,21 +76,21 @@ document.addEventListener("click", (event) => {
       curr += " * ";
     }
 
-    display.textContent = curr;
+    display.textContent += ` ${opr} `;
   }
 
   // Equals to Sign Clicked
   if (event.target.className == "btn-equal") {
     exp = curr.split(" ");
     if (check(exp) == false) return;
-    if (exp[2] == 0) display.textContent = "lmao";
+    if (exp[2] == 0) res = "lmao";
     else res = operate(exp[0], exp[2], exp[1]);
 
     curr = res.toString();
-    console.log(curr);
     opr = null;
     justSolved = true;
     display.textContent = res;
+    displayRes.textContent = res;
   }
 });
 
@@ -98,3 +100,16 @@ function check(exp) {
 
   return true;
 }
+
+// function lastIndex(s) {
+//   if (!opr) return 0;
+//   if (opr == "+") {
+//     return s.lastIndexOf("+") + 2;
+//   } else if (opr == "-") {
+//     return s.lastIndexOf("-") + 2;
+//   } else if (opr == "*") {
+//     return s.lastIndexOf("*") + 2;
+//   } else if (opr == "/") {
+//     return s.lastIndexOf("/") + 2;
+//   }
+// }
